@@ -5,16 +5,8 @@ import { View, Text } from 'react-native';
 
 
 import Lista from './pantallas/Lista';
-import Nuevo from './pantallas/Nuevo'
-
-
-function PantallaDetalle() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Formulario detallee</Text>
-    </View>
-  );
-}
+import Nuevo from './pantallas/Nuevo';
+import Detalle from './pantallas/Detalle';
 
 
 const Stack = createNativeStackNavigator();
@@ -24,7 +16,7 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Lista">
         <Stack.Screen name="Lista" component={Lista} options={{ title: 'Directorio' }} />
-        <Stack.Screen name="Detalle" component={PantallaDetalle} />
+        <Stack.Screen name="Detalle" component={Detalle} />
         <Stack.Screen name="Nuevo" component={Nuevo} options={{ title: 'Nuevo Contacto' }} />
       </Stack.Navigator>
     </NavigationContainer>
