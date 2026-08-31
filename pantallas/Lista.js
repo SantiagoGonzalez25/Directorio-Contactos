@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -7,21 +8,43 @@ import {
   StyleSheet,
 } from "react-native";
 
-
-const contactosPrueba = [
-  { id: "1", nombre: "Cristian", telefono: "3001234567", ciudad: "Medellín" },
-  { id: "2", nombre: "Carolina", telefono: "3109876543", ciudad: "Bogotá" },
-];
-
+import { collection, onSnapshot } from "firebase/firestore";
+import { db } from "../config/firebase";
 
 export default function Lista({ navigation }) {
+  const [contactos, setContactos] = useState([]);
+  const [cargando, setCargando] = useState(true);
+
+  useEffect(() => {
+    onSnapshot(collection(db, "contactos"), (snapshot) => {
+      const lista = [];
+      snapshot.forEach((doc) => {
+        lista.push({ id: doc.id, ...doc.data() });
+      });
+      setContactos(lista);
+      setCargando(false);
+    });
+  }, []);
+
+  if (cargando) {
+    return (
+      <View style={[styles.pantalla, styles.centrado]}>
+        <Text>Cargando...</Text>
+      </View>
+    );
+  }
+
   return (
     <View style={styles.pantalla}>
       <FlatList
-        data={contactosPrueba} 
+        data={contactos}
         keyExtractor={(item) => item.id}
+        ListEmptyComponent={
+          <Text style={styles.textoVacio}>
+            No hay contactos registrados aún.
+          </Text>
+        }
         renderItem={({ item }) => (
-         
           <TouchableOpacity
             style={styles.tarjeta}
             onPress={() => navigation.navigate("Detalle", { contacto: item })}
@@ -40,6 +63,7 @@ export default function Lista({ navigation }) {
 
 const styles = StyleSheet.create({
   pantalla: { flex: 1, padding: 20, backgroundColor: "#fff" },
+  centrado: { justifyContent: "center", alignItems: "center" },
   tarjeta: {
     padding: 15,
     backgroundColor: "#f0f0f0",
@@ -47,4 +71,10 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   textoNombre: { fontSize: 18 },
+  textoVacio: {
+    textAlign: "center",
+    marginTop: 20,
+    fontSize: 16,
+    color: "gray",
+  },
 });
