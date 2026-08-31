@@ -1,11 +1,7 @@
 import { View, Text, StyleSheet, Button } from "react-native";
 
 export default function Detalle({ route, navigation }) {
-  const contacto = route.params?.contacto ?? {
-    nombre: "Cristian",
-    telefono: "3001234567",
-    ciudad: "Medellín",
-  };
+  const { contacto } = route.params;
 
   return (
     <View style={styles.pantalla}>
