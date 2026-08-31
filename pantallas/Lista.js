@@ -53,10 +53,13 @@ export default function Lista({ navigation }) {
           </TouchableOpacity>
         )}
       />
-      <Button
-        title="Crear un contacto nuevo"
-        onPress={() => navigation.navigate("Nuevo")}
-      />
+      <View style={styles.botonCrear}>
+        <Button
+          title="Crear un contacto nuevo"
+          onPress={() => navigation.navigate("Nuevo")}
+          color="#007AFF"
+        />
+      </View>
     </View>
   );
 }
@@ -76,5 +79,8 @@ const styles = StyleSheet.create({
     marginTop: 20,
     fontSize: 16,
     color: "gray",
+  },
+  botonCrear: {
+    marginBottom: 20,
   },
 });
