@@ -21,7 +21,7 @@ export default function Nuevo({ navigation }) {
         ciudad: ciudad,
       });
 
-      navigation.navigate("Lista");
+      navigation.goBack();
     } catch (error) {
       Alert.alert("Error", "No se pudo guardar");
       console.log(error);
